@@ -36,7 +36,7 @@ public class User {
     }
 
     public String getLastName() {
-        return lastName();
+        return lastName;
     }
 
     public void setLastName(String lastName) {
@@ -48,7 +48,7 @@ public class User {
     }
 
     public String setAvatar(String avatar) {
-        this.avatar = avatar;
+        return avatar;
     }
 
     public String getEmail() {

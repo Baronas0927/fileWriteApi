@@ -27,10 +27,13 @@ public class Main {
             updateJson(users);
     }
     public static void updateJson(List <User> users){
-        try(FileWriter writer = new FileWriter("users.json")){
-            gson.toJson(users, writer);
+        //The method takes a List<User> object as a parameter, which represents the list of users to be written to the JSON file.
+        try(FileWriter writer = new FileWriter("users.json")){ //It tries to create a FileWriter object to write to the "users.json" file.
+            //It uses the gson object (which is assumed to be a Gson instance) to convert the List<User> object to a JSON string.
+            gson.toJson(users, writer);//It writes the JSON string to the file using the FileWriter.
         }catch (IOException e){
             throw new RuntimeException(e);
+            //If any IOException occurs during the writing process, it catches the exception and wraps it in a RuntimeException, which is then thrown.
         }
     }
     public static void addUserOld(User user){
@@ -73,13 +76,18 @@ public class Main {
         return new User();
     }
     public static List<User> getUsers(){
+        //The method creates an empty list of User objects using an ArrayList.
         List<User> users = new ArrayList<>();
         try(FileReader reader = new FileReader("users.json")){
-            //Parse the JSON file
+            //It tries to read the "users.json" file using a FileReader.Analyze the JSON file
             JsonElement jsonElement = JsonParser.parseReader(reader);
+            //It parses the JSON file using a JsonParser and gets a JsonElement object.
             JsonArray jsonArray = jsonElement.getAsJsonArray();
-            //Iterate through the JSON object
+            //It converts the JsonElement to a JsonArray object, which represents an array of JSON objects.
+            // Iterate through the JSON object
             for (JsonElement element : jsonArray){
+                //For each JsonElement in the array, it converts it to a JsonObject and extracts the following fields.
+                // It iterates through the JsonArray using a for-each loop.
                 JsonObject jsonObject = element.getAsJsonObject();
                 // Extract fields from JSON object
                 long id = jsonObject.get("id").getAsLong();
@@ -89,16 +97,20 @@ public class Main {
                 String email = jsonObject.get("email").getAsString();
                 // Create User object and add to list
                 User user = new User();
+                //It creates a new User object and sets its fields using the extracted values.
                 user.setId(id);
                 user.setFirstName(name);
                 user.setLastName(surname);
                 user.setEmail(email);
                 user.setAvatar(avatar);
                 users.add(user);
+                //It adds the User object to the list of users.
             }
         }catch (Exception e){
             System.out.println(e);
+            //If any exception occurs during the process, it catches the exception and prints it to the console.
         }
         return users;
+        //Finally, it returns the list of User objects.
     }
 }
